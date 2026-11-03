@@ -1,10 +1,29 @@
 .editor {
     size: 100%;
     display: flex;
+    overflow: auto;
+    border: 1px solid black;
 }
 
-.editor textarea {
+.editor-line-numbers-container {
+    padding: 6px;
+    text-align: right;
+    overflow: hidden;
+    user-select: none;
+    line-height: 1.5;
+    font-size: 14px;
+    font-family: monospace;
+}
+
+.editor-textarea {
     resize: none;
+    white-space: pre;
     flex: 1;
     min-height: 0;
+    padding: 6px;
+    outline: none;
+    overflow: auto;
+    line-height: 1.5;
+    font-size: 14px;
+    font-family: monospace;
 }
