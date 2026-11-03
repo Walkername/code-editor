@@ -1,0 +1,9 @@
+.terminal {
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+}
+
+.terminal-output {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}

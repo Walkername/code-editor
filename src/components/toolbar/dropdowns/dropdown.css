@@ -1,0 +1,12 @@
+.tool-dropdown {
+    position: absolute;
+    z-index: 1000;
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 12px;
+
+    list-style: none;
+    padding: 10px;
+    margin: 5px 0px;
+}

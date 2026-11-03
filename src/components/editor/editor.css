@@ -1,0 +1,10 @@
+.editor {
+    size: 100%;
+    display: flex;
+}
+
+.editor textarea {
+    resize: none;
+    flex: 1;
+    min-height: 0;
+}
