@@ -1,0 +1,10 @@
+.file-tree-node {
+    cursor: pointer;
+    padding: 2px;
+    width: 200px;
+    white-space: pre;
+}
+
+.file-tree-node:hover {
+    background-color: gray;
+}

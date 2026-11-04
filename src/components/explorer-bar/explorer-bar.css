@@ -2,7 +2,23 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     border-right: 1px solid black;
+    min-height: 0;
+}
+
+.explorer-empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.explorer-content {
+    min-height: 0;
+    width: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    overflow-x: hidden;
 }

@@ -14,7 +14,7 @@ export default function Editor() {
             lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop;
         }
     };
-    
+
     return (
         <div className="editor">
             <div className="editor-line-numbers-container" ref={lineNumbersRef}>

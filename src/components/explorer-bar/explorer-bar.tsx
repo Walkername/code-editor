@@ -8,14 +8,16 @@ export default function ExplorerBar() {
     return (
         <div className="explorer-window">
             <div className="explorer">
-                <button onClick={openWorkspace}>Open Folder</button>
-
-                <div className="explorer__body">
-                    {!rootPath && (
-                        <p className="explorer__empty">
+                {!rootPath && (
+                    <div className="explorer-empty">
+                        <button onClick={openWorkspace}>Open Folder</button>
+                        <p>
                             Folder is not selected
                         </p>
-                    )}
+                    </div>
+                )}
+
+                <div className="explorer-content">
                     {tree && <FileTreeNode node={tree} depth={0} />}
                 </div>
             </div>

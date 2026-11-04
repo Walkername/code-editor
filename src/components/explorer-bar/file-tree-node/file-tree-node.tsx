@@ -1,6 +1,6 @@
-// components/explorer/file-tree-node.tsx
 import { useEffect } from "react";
 import { useWorkspace, TreeNode } from "../../../context/workspace-context";
+import "./file-tree-node.css";
 
 type Props = {
     node: TreeNode;
@@ -10,7 +10,6 @@ type Props = {
 export function FileTreeNode({ node, depth }: Props) {
     const { toggleNode, loadChildren } = useWorkspace();
 
-    // Ленивая загрузка: раскрыли и детей ещё нет — грузим
     useEffect(() => {
         if (
             node.isDirectory &&
