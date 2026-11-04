@@ -8,3 +8,7 @@
 .file-tree-node:hover {
     background-color: gray;
 }
+
+.file-tree-node-selected {
+    background-color: darkgray;
+}

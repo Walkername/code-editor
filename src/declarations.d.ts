@@ -8,11 +8,13 @@ export type DirEntry = {
 
 declare global {
     declare module "*.css";
-    
+
     interface Window {
         electronAPI: {
             openDirectory: () => Promise<string | null>;
             readDirectory: (dirPath: string) => Promise<DirEntry[]>;
+            readFile: (filePath: string) => Promise<string>;
+            writeFile: (filePath: string, data: string) => Promise<void>;
         };
     }
 }

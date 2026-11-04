@@ -1,13 +1,77 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./editor.css";
+import { useWorkspace } from "../../context/workspace-context";
 
 export default function Editor() {
-    const [text, setText] = useState<string>("");
+    const { selectedFilePath, isDirty, setIsDirty, registerSaveHandler } =
+        useWorkspace();
+
+    const [content, setContent] = useState<string>("");
+    const [originalContent, setOriginalContent] = useState<string>("");
+
+    const contentRef = useRef(content);
+    contentRef.current = content;
+
+    const originalRef = useRef(originalContent);
+    originalRef.current = originalContent;
+
+    const pathRef = useRef(selectedFilePath);
+    pathRef.current = selectedFilePath;
+
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const lineNumbersRef = useRef<HTMLDivElement>(null);
 
-    const lineCount = text.split("\n").length;
+    const lineCount = content.split("\n").length;
     const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1);
+
+    useEffect(() => {
+        if (!selectedFilePath) {
+            setContent("");
+            setOriginalContent("");
+            return;
+        }
+
+        let cancelled = false;
+
+        window.electronAPI
+            .readFile(selectedFilePath)
+            .then((text) => {
+                if (cancelled) return;
+                setContent(text);
+                setOriginalContent(text);
+            })
+            .catch((e) => {
+                if (cancelled) return;
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [selectedFilePath]);
+
+    useEffect(() => {
+        setIsDirty(content !== originalContent);
+    }, [content, originalContent, setIsDirty]);
+
+    useEffect(() => {
+        if (!selectedFilePath) return;
+
+        const handler = async () => {
+            const path = pathRef.current;
+            if (!path) return;
+            const text = contentRef.current;
+            if (text === originalRef.current) return;
+
+            await window.electronAPI.writeFile(path, text);
+            setOriginalContent(text);
+        };
+
+        return registerSaveHandler(handler);
+    }, [selectedFilePath, registerSaveHandler]);
+
+    if (!selectedFilePath) {
+        return <div className="editor editor--empty">Файл не выбран</div>;
+    }
 
     const handleScroll = () => {
         if (lineNumbersRef.current && textareaRef.current) {
@@ -29,7 +93,8 @@ export default function Editor() {
                 ref={textareaRef}
                 wrap="off"
                 onScroll={handleScroll}
-                onChange={(e) => setText(e.target.value)}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
             />
         </div>
     );

@@ -8,7 +8,8 @@ type Props = {
 };
 
 export function FileTreeNode({ node, depth }: Props) {
-    const { toggleNode, loadChildren } = useWorkspace();
+    const { toggleNode, loadChildren, selectFile, selectedFilePath } = useWorkspace();
+    const isSelected = selectedFilePath === node.path;
 
     useEffect(() => {
         if (
@@ -26,6 +27,14 @@ export function FileTreeNode({ node, depth }: Props) {
         loadChildren,
     ]);
 
+    const handleClick = () => {
+        if (node.isDirectory) {
+            toggleNode(node.path);
+        } else {
+            selectFile(node.path);
+        }
+    };
+
     const isFolder = node.isDirectory;
 
     const initialPaddingLeft = 6;
@@ -33,9 +42,9 @@ export function FileTreeNode({ node, depth }: Props) {
     return (
         <div>
             <div
-                className="file-tree-node"
+                className={`file-tree-node ${isSelected && "file-tree-node-selected"}`}
                 style={{ paddingLeft: initialPaddingLeft + depth * 16 }}
-                onClick={() => isFolder && toggleNode(node.path)}
+                onClick={handleClick}
             >
                 <span className="file-tree-node__icon">
                     {isFolder ? (node.isExpanded ? "📂" : "📁") : "📄"}
