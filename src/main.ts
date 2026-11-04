@@ -3,6 +3,7 @@ import path from "node:path";
 import started from "electron-squirrel-startup";
 import { dialog, ipcMain } from "electron/main";
 import { promises as fs } from "node:fs";
+import { store } from "./store/store";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -63,6 +64,35 @@ app.on("window-all-closed", () => {
 // code. You can also put them in separate files and import them here.
 
 let allowedRoot: string | null = null;
+
+ipcMain.handle("app:getLastWorkspace", async () => {
+    const dir = store.get("lastDirectory");
+    if (!dir) return null;
+
+    try {
+        const stat = await fs.stat(dir);
+        if (!stat.isDirectory()) throw new Error("Not a directory");
+    } catch {
+        store.set("lastDirectory", null);
+        return null;
+    }
+
+    allowedRoot = path.resolve(dir);
+
+    return {
+        lastDirectory: dir,
+        lastFile: store.get("lastFile"),
+        expandedPaths: store.get("expandedPaths"),
+    };
+});
+
+ipcMain.handle("app:setLastDirectory", (_e, dir: string | null) => {
+    store.set("lastDirectory", dir);
+});
+
+ipcMain.handle("app:setLastFile", (_e, filePath: string | null) => {
+    store.set("lastFile", filePath);
+});
 
 ipcMain.handle("dialog:openDirectory", async () => {
     const { canceled, filePaths } = await dialog.showOpenDialog({

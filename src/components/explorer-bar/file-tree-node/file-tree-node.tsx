@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useWorkspace, TreeNode } from "../../../context/workspace-context";
+import { useWorkspace } from "../../../context/workspace-context";
 import "./file-tree-node.css";
+import { TreeNode } from "../../../types/explorer/types";
 
 type Props = {
     node: TreeNode;

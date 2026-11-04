@@ -1,4 +1,3 @@
-
 export type DropdownType = "file" | "edit";
 
 export type ToolDropdownItem = {

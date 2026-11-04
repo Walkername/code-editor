@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import "./tool-bar.css";
-import { DropdownType, ToolDropdownItem } from "../../types/toolbar/types";
+import { DropdownType } from "../../types/tool-bar/types";
 import { dropdownRegistry } from "./dropdowns";
 
 const items: { type: DropdownType; label: string }[] = [

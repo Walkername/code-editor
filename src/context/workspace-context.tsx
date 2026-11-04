@@ -8,13 +8,7 @@ import {
     useRef,
     useEffect,
 } from "react";
-import type { DirEntry } from "../declarations";
-
-export type TreeNode = DirEntry & {
-    children?: TreeNode[];
-    isExpanded?: boolean;
-    isLoading?: boolean;
-};
+import { TreeNode } from "../types/explorer/types";
 
 type SaveHandler = () => Promise<void>;
 
@@ -53,6 +47,8 @@ function updateNode(
 }
 
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
+    const [hasRestored, setHasRestored] = useState<boolean>(false);
+
     const [rootPath, setRootPath] = useState<string | null>(null);
     const [tree, setTree] = useState<TreeNode | null>(null);
 
@@ -156,15 +152,81 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     }, []);
 
     useEffect(() => {
-      const onKey = (e: KeyboardEvent) => {
-        const isSave = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's';
-        if (!isSave) return;
-        e.preventDefault(); // блокируем «Сохранить страницу» в Electron/браузере
-        saveActiveFile();
-      };
-      window.addEventListener('keydown', onKey);
-      return () => window.removeEventListener('keydown', onKey);
+        const onKey = (e: KeyboardEvent) => {
+            const isSave =
+                (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s";
+            if (!isSave) return;
+            e.preventDefault();
+            saveActiveFile();
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
     }, [saveActiveFile]);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        window.electronAPI
+            .getLastWorkspace()
+            .then(async (saved) => {
+                if (cancelled) return;
+                if (!saved) return;
+                if (saved.lastDirectory === null) return;
+
+                const entries = await window.electronAPI.readDirectory(
+                    saved.lastDirectory,
+                );
+                const name =
+                    saved.lastDirectory.split(/[\\/]/).pop() ||
+                    saved.lastDirectory;
+
+                setRootPath(saved.lastDirectory);
+                setTree({
+                    name,
+                    path: saved.lastDirectory,
+                    isDirectory: true,
+                    isExpanded: true,
+                    children: entries.map((e) => ({
+                        ...e,
+                        children: undefined,
+                    })),
+                });
+
+                if (saved.expandedPaths.length > 0) {
+                    for (const p of saved.expandedPaths) {
+                        if (cancelled) return;
+                        await loadChildren(p);
+                        if (cancelled) return;
+                        setTree(
+                            (prev) =>
+                                prev &&
+                                updateNode(prev, p, (n) => ({
+                                    ...n,
+                                    isExpanded: true,
+                                })),
+                        );
+                    }
+                }
+                if (saved.lastFile) {
+                    setSelectedFilePath(saved.lastFile);
+                }
+
+                setHasRestored(true);
+            })
+            .catch(console.error);
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    useEffect(() => {
+        if (hasRestored) window.electronAPI.setLastDirectory(rootPath);
+    }, [rootPath, hasRestored]);
+
+    useEffect(() => {
+        if (hasRestored) window.electronAPI.setLastFile(selectedFilePath);
+    }, [selectedFilePath, hasRestored]);
 
     const value = useMemo(
         () => ({

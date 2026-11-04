@@ -1,7 +1,7 @@
 import Editor from "../../components/editor/editor";
 import ExplorerBar from "../../components/explorer-bar/explorer-bar";
 import Terminal from "../../components/terminal/terminal";
-import ToolBar from "../../components/toolbar/tool-bar";
+import ToolBar from "../../components/tool-bar/tool-bar";
 import "./main-page.css";
 
 export default function MainPage() {
