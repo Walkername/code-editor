@@ -28,11 +28,13 @@ export function FileTreeNode({ node, depth }: Props) {
 
     const isFolder = node.isDirectory;
 
+    const initialPaddingLeft = 6;
+
     return (
         <div>
             <div
                 className="file-tree-node"
-                style={{ paddingLeft: depth * 16 }}
+                style={{ paddingLeft: initialPaddingLeft + depth * 16 }}
                 onClick={() => isFolder && toggleNode(node.path)}
             >
                 <span className="file-tree-node__icon">
