@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWorkspace } from "../../../context/workspace-context";
 import "./file-tree-node.css";
 import { TreeNode } from "../../../types/explorer/types";
+import { File, Folder, FolderOpen } from "lucide-react";
 
 type Props = {
     node: TreeNode;
@@ -9,7 +10,8 @@ type Props = {
 };
 
 export function FileTreeNode({ node, depth }: Props) {
-    const { toggleNode, loadChildren, selectFile, selectedFilePath } = useWorkspace();
+    const { toggleNode, loadChildren, selectFile, selectedFilePath } =
+        useWorkspace();
     const isSelected = selectedFilePath === node.path;
 
     useEffect(() => {
@@ -38,19 +40,25 @@ export function FileTreeNode({ node, depth }: Props) {
 
     const isFolder = node.isDirectory;
 
-    const initialPaddingLeft = 6;
-
     return (
-        <div>
+        <div className="file-tree">
             <div
                 className={`file-tree-node ${isSelected && "file-tree-node-selected"}`}
-                style={{ paddingLeft: initialPaddingLeft + depth * 16 }}
+                style={{ "--node-depth": `${depth}` } as React.CSSProperties}
                 onClick={handleClick}
             >
-                <span className="file-tree-node__icon">
-                    {isFolder ? (node.isExpanded ? "📂" : "📁") : "📄"}
+                <span className="file-tree-node-icon">
+                    {isFolder ? (
+                        node.isExpanded ? (
+                            <FolderOpen size="14" />
+                        ) : (
+                            <Folder size="14" />
+                        )
+                    ) : (
+                        <File size="14" />
+                    )}
                 </span>
-                <span className="file-tree-node__name">{node.name}</span>
+                <span className="file-tree-node-name">{node.name}</span>
                 {node.isLoading && (
                     <span className="file-tree-node__spinner">…</span>
                 )}
@@ -61,9 +69,9 @@ export function FileTreeNode({ node, depth }: Props) {
                     {node.children.length === 0 && !node.isLoading && (
                         <div
                             className="file-tree-node file-tree-node--empty"
-                            style={{ paddingLeft: (depth + 1) * 16 }}
+                            style={{ "--node-depth": `${depth + 1}` } as React.CSSProperties}
                         >
-                            пусто
+                            empty
                         </div>
                     )}
                     {node.children.map((child) => (

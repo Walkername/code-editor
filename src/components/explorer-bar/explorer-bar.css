@@ -1,3 +1,7 @@
+.explorer-window {
+    border-radius: 12px;
+}
+
 .explorer {
     display: flex;
     flex-direction: column;

@@ -10,6 +10,7 @@
     grid-template-rows: minmax(0, 1fr);
     min-height: 0;
     overflow: hidden;
+    gap: 4px;
 }
 
 .central-window {

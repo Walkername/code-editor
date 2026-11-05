@@ -1,14 +1,103 @@
-html, body, #root {
+:root {
+    --font-ui:
+        "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-size-ui: 14px;
+    --font-size-ui-sm: 11px;
+    --line-height-ui: 1.4;
+    --font-ui-color: #cfcfcf;
+    --background-ui-color: #292929;
+    --highlight-ui-color: #454545;
+    --outline-ui-color: #2bcc7b;
+
+    --font-editor: "JetBrains Mono", monospace;
+    --font-size-editor: 13px;
+    --line-height-editor: 1.4;
+    --font-editor-color: #cfcfcf;
+}
+
+html,
+body,
+#root {
     height: 100%;
+    color: var(--font-ui-color);
+    background-color: var(--background-ui-color);
 }
 
 body {
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-        sans-serif;
     margin: 0rem;
 }
 
-.bar-label {
-    border-bottom: 1px solid black;
+button, select, body {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    -webkit-font-smoothing: antialiased;   /* сглаживание на macOS */
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+textarea {
+    color: var(--font-editor-color);
+    background-color: var(--background-ui-color);
+    border: none;
+}
+
+input {
+    color: var(--font-editor-color);
+    background-color: var(--background-ui-color);
+    outline: none;
+    border: 1px solid black;
+}
+
+button {
+    color: var(--font-ui-color);
+    background-color: var(--background-ui-color);
+
+    width: 100%;
+    text-align: start;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+button:hover {
+    background-color: var(--highlight-ui-color);
+    border: 1px solid var(--outline-ui-color);
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 18px;
+    height: 18px;
+}
+
+/* Дорожка (трек) — в Zed она обычно прозрачная */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Ползунок (thumb) — полупрозрачный, тонкий */
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15); /* Очень прозрачный в покое */
+    border-radius: 0; /* В Zed углы прямые */
+    border: 3px solid transparent; /* Создаёт эффект тонкого ползунка внутри широкой области */
+    background-clip: padding-box; /* Обрезает фон по границе */
+}
+
+/* Ползунок при наведении — становится ярче */
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Ползунок при перетаскивании (активное состояние) */
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Убираем угол между скроллбарами */
+::-webkit-scrollbar-corner {
+    background: transparent;
 }

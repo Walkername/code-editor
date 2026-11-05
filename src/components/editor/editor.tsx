@@ -80,22 +80,24 @@ export default function Editor() {
     };
 
     return (
-        <div className="editor">
-            <div className="editor-line-numbers-container" ref={lineNumbersRef}>
-                {lineNumbers.map((number) => (
-                    <div className="editor-line-number" key={number}>
-                        {number}
-                    </div>
-                ))}
+        <div className="editor-window">
+            <div className="editor">
+                <div className="editor-line-numbers-container" ref={lineNumbersRef}>
+                    {lineNumbers.map((number) => (
+                        <div className="editor-line-number" key={number}>
+                            {number}
+                        </div>
+                    ))}
+                </div>
+                <textarea
+                    className="editor-textarea"
+                    ref={textareaRef}
+                    wrap="off"
+                    onScroll={handleScroll}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
             </div>
-            <textarea
-                className="editor-textarea"
-                ref={textareaRef}
-                wrap="off"
-                onScroll={handleScroll}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-            />
         </div>
     );
 }

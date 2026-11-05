@@ -13,6 +13,7 @@
  */
 
 import "./index.css";
+import "./fonts/fonts.css";
 import "./app";
 
 console.log(

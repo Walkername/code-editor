@@ -1,6 +1,16 @@
 .terminal {
     display: grid;
     grid-template-rows: 3fr 1fr;
+
+    line-height: var(--line-height-editor);
+    font-family: var(--font-editor);
+    font-size: var(--font-size-editor);
+}
+
+.terminal-input {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 .terminal-output {

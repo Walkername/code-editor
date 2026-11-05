@@ -6,7 +6,7 @@ export default function Terminal() {
             <div className="terminal-output">
                 
             </div>
-            <input type="text" />
+            <input className="terminal-input" type="text" />
         </div>
     )
 }

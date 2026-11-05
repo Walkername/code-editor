@@ -1,5 +1,4 @@
 .tool-bar {
     display: flex;
-
-    background-color: lightgray;
+    padding: 4px;
 }

@@ -1,14 +1,39 @@
+.file-tree {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
 .file-tree-node {
     cursor: pointer;
     padding-top: 2px;
     padding-bottom: 2px;
+    padding-left: calc(8px + var(--node-depth) * (var(--font-size-ui) + 4px));
     white-space: pre;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    display: flex;
+    align-items: center;
 }
 
 .file-tree-node:hover {
-    background-color: gray;
+    background-color: var(--highlight-ui-color);
+}
+
+.file-tree-node-icon {
+    display: flex;
+    align-items: center;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.file-tree-node-name {
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .file-tree-node-selected {
-    background-color: darkgray;
+    background-color: var(--highlight-ui-color);
+    border: 1px solid var(--outline-ui-color);
 }

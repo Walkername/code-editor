@@ -1,8 +1,21 @@
-.editor {
-    size: 100%;
-    display: flex;
+.editor-window {
+    width: 100%;
+    height: 100%;
     overflow: auto;
     border: 1px solid black;
+    box-sizing: border-box;
+}
+
+.editor {
+    display: flex;
+    align-items: stretch;
+    min-height: 100%;
+    min-width: 100%;
+    width: max-content;
+
+    line-height: var(--line-height-editor);
+    font-family: var(--font-editor);
+    font-size: var(--font-size-editor);
 }
 
 .editor-line-numbers-container {
@@ -10,9 +23,7 @@
     text-align: right;
     overflow: hidden;
     user-select: none;
-    line-height: 1.5;
-    font-size: 14px;
-    font-family: monospace;
+    flex: 0 0 auto;
 }
 
 .editor-textarea {
@@ -23,7 +34,16 @@
     padding: 6px;
     outline: none;
     overflow: auto;
-    line-height: 1.5;
-    font-size: 14px;
-    font-family: monospace;
+    overflow: hidden;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    field-sizing: content;
+
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
