@@ -1,5 +1,14 @@
 .explorer-window {
+    display: flex;
+    flex-direction: column;
     border-radius: 12px;
+    background-color: var(--background-ui-color-secondary);
+    margin-top: 6px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    margin-right: 0px;
+    padding: 10px;
+    gap: 10px;
 }
 
 .explorer {
@@ -8,8 +17,8 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    border-right: 1px solid black;
     min-height: 0;
+    /*margin: 10px;*/
 }
 
 .explorer-empty {
@@ -24,10 +33,9 @@
     flex-direction: column;
     justify-content: start;
     min-height: 0;
-    width: 300px;
     height: 100%;
+    width: 100%;
     overflow-y: auto;
-    scrollbar-width: thin;
     overflow-x: hidden;
 
     user-select: none;

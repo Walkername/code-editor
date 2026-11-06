@@ -1,17 +1,22 @@
 .editor-window {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    border: 1px solid black;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+
+    padding: 10px;
+    gap: 10px;
+
+    min-height: 0;
+
+    background-color: var(--background-ui-color-secondary);
 }
 
 .editor {
     display: flex;
-    align-items: stretch;
-    min-height: 100%;
-    min-width: 100%;
-    width: max-content;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
 
     line-height: var(--line-height-editor);
     font-family: var(--font-editor);
@@ -19,29 +24,22 @@
 }
 
 .editor-line-numbers-container {
-    padding: 6px;
     text-align: right;
     overflow: hidden;
     user-select: none;
-    flex: 0 0 auto;
 }
 
 .editor-textarea {
     resize: none;
     white-space: pre;
     flex: 1;
-    min-height: 0;
-    padding: 6px;
-    outline: none;
-    overflow: auto;
-    overflow: hidden;
-    height: auto;
-    min-height: 0;
     min-width: 0;
-
-    box-sizing: border-box;
-
-    field-sizing: content;
+    outline: none;
+    
+    overflow: auto;
+    
+    padding: 0px;
+    padding-right: 6px;
 
     font-family: inherit;
     font-size: inherit;

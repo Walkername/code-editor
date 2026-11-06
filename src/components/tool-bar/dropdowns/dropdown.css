@@ -2,7 +2,7 @@
     position: absolute;
     z-index: 1000;
 
-    background-color: var(--background-ui-color);
+    background-color: var(--background-ui-color-primary);
     box-shadow: 0px 0px 3px black;
     border: 1px solid #303030;
     border-radius: 12px;

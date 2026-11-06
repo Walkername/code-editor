@@ -5,7 +5,8 @@
     --font-size-ui-sm: 11px;
     --line-height-ui: 1.4;
     --font-ui-color: #cfcfcf;
-    --background-ui-color: #292929;
+    --background-ui-color-primary: #353535;
+    --background-ui-color-secondary: #202020;
     --highlight-ui-color: #454545;
     --outline-ui-color: #2bcc7b;
 
@@ -20,7 +21,7 @@ body,
 #root {
     height: 100%;
     color: var(--font-ui-color);
-    background-color: var(--background-ui-color);
+    background-color: var(--background-ui-color-primary);
 }
 
 body {
@@ -38,20 +39,20 @@ button, select, body {
 
 textarea {
     color: var(--font-editor-color);
-    background-color: var(--background-ui-color);
+    background-color: var(--background-ui-color-secondary);
     border: none;
 }
 
 input {
     color: var(--font-editor-color);
-    background-color: var(--background-ui-color);
+    background-color: var(--background-ui-color-secondary);
     outline: none;
     border: 1px solid black;
 }
 
 button {
     color: var(--font-ui-color);
-    background-color: var(--background-ui-color);
+    background-color: var(--background-ui-color-primary);
 
     width: 100%;
     text-align: start;
@@ -68,36 +69,36 @@ button:hover {
     border: 1px solid var(--outline-ui-color);
 }
 
-/* WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
     width: 18px;
     height: 18px;
 }
 
-/* Дорожка (трек) — в Zed она обычно прозрачная */
 ::-webkit-scrollbar-track {
     background: transparent;
 }
 
-/* Ползунок (thumb) — полупрозрачный, тонкий */
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.15); /* Очень прозрачный в покое */
-    border-radius: 0; /* В Zed углы прямые */
-    border: 3px solid transparent; /* Создаёт эффект тонкого ползунка внутри широкой области */
-    background-clip: padding-box; /* Обрезает фон по границе */
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 0;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    cursor:auto;
 }
 
-/* Ползунок при наведении — становится ярче */
 ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(255, 255, 255, 0.35);
 }
 
-/* Ползунок при перетаскивании (активное состояние) */
 ::-webkit-scrollbar-thumb:active {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Убираем угол между скроллбарами */
 ::-webkit-scrollbar-corner {
     background: transparent;
+}
+
+.bar-label {
+    font-weight: bold;
+    padding: 2px;
 }

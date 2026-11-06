@@ -81,6 +81,7 @@ export default function Editor() {
 
     return (
         <div className="editor-window">
+            <div className="bar-label">Editor</div>
             <div className="editor">
                 <div className="editor-line-numbers-container" ref={lineNumbersRef}>
                     {lineNumbers.map((number) => (

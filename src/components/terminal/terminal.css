@@ -1,19 +1,36 @@
+.terminal-window {
+    
+
+    border-radius: 12px;
+    border: none;
+
+    padding: 10px;
+
+    
+
+    background-color: var(--background-ui-color-secondary);
+}
+
 .terminal {
     display: grid;
     grid-template-rows: 3fr 1fr;
-
+    
     line-height: var(--line-height-editor);
     font-family: var(--font-editor);
     font-size: var(--font-size-editor);
+}
+
+.terminal-input-container {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 6px;
 }
 
 .terminal-input {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-}
-
-.terminal-output {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border: none;
+    width: 100%;
 }

@@ -7,6 +7,7 @@ export default function ExplorerBar() {
 
     return (
         <div className="explorer-window">
+            <div className="bar-label">Explorer</div>
             <div className="explorer">
                 {!rootPath ? (
                     <div className="explorer-empty">
