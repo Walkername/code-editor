@@ -11,6 +11,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
         ipcRenderer.invoke("dialog:openDirectory"),
     readDirectory: (dirPath: string): Promise<DirEntry[]> =>
         ipcRenderer.invoke("fs:readDirectory", dirPath),
+
+    openFile: (): Promise<string | null> =>
+        ipcRenderer.invoke("dialog:openFile"),
     readFile: (filePath: string) => ipcRenderer.invoke("fs:readFile", filePath),
     writeFile: (filePath: string, data: string) =>
         ipcRenderer.invoke("fs:writeFile", filePath, data),

@@ -16,4 +16,17 @@ export const registerDialogHandlers = () => {
         setAllowedRoot(path.resolve(filePaths[0]));
         return getAllowedRoot();
     });
+
+    ipcMain.handle("dialog:openFile", async () => {
+        const { canceled, filePaths } = await dialog.showOpenDialog({
+            properties: ["openFile"],
+            title: "Select a file",
+        });
+
+        if (canceled || filePaths.length === 0) {
+            return null;
+        }
+
+        return path.resolve(filePaths[0]);
+    });
 };

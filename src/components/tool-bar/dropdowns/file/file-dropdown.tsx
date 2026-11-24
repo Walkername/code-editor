@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function FileDropDown({ close }: Props) {
-    const { openWorkspace, saveActiveFile } = useWorkspace();
+    const { openWorkspace, saveActiveFile, openFile } = useWorkspace();
 
     const handle = (name: string) => {
         console.log(name);
@@ -22,7 +22,10 @@ export default function FileDropDown({ close }: Props) {
             />
             <ToolDropdownItem
                 label="Open File"
-                onSelect={() => handle("open file")}
+                onSelect={() => {
+                    handle("open file");
+                    openFile();
+                }}
             />
             <ToolDropdownItem
                 label="Open Folder"

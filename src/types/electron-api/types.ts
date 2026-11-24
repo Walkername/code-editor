@@ -4,6 +4,8 @@ import { Schema } from "../store/types";
 export interface ElectronAPI {
     openDirectory: () => Promise<string | null>;
     readDirectory: (dirPath: string) => Promise<DirEntry[]>;
+    
+    openFile: () => Promise<string | null>;
     readFile: (filePath: string) => Promise<string>;
     writeFile: (filePath: string, data: string) => Promise<void>;
 

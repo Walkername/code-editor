@@ -23,6 +23,8 @@ type WorkspaceContextValue = {
     loadChildren: (nodePath: string) => Promise<void>;
     toggleNode: (nodePath: string) => void;
 
+    openFile: () => Promise<void>;
+    
     selectFile: (path: string | null) => void;
     setIsDirty: (dirty: boolean) => void;
 
@@ -95,6 +97,24 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         },
         [selectedFilePath, isDirty],
     );
+
+    const openFile = useCallback(async () => {
+        if (isDirty) {
+            // todo: check 'dialog.showMessageBox' to replace with
+            const ok = window.confirm(
+                "Current file has unsaved changes. Are you sure to switch?",
+            );
+
+            if (!ok) return;
+        }
+        
+        const path = await window.electronAPI.openFile();
+        if (!path) return;
+        if (path === selectedFilePath) return;
+        
+        setSelectedFilePath(path);
+        setIsDirty(false);
+    }, [selectedFilePath, isDirty]);
 
     const loadChildren = useCallback(async (nodePath: string) => {
         const entries = await window.electronAPI.readDirectory(nodePath);
@@ -232,13 +252,19 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         () => ({
             rootPath,
             tree,
+            
             selectedFilePath,
             isDirty,
+            
             openWorkspace,
             loadChildren,
             toggleNode,
+
+            openFile,
+            
             selectFile,
             setIsDirty,
+            
             isSaving,
             saveActiveFile,
             registerSaveHandler,
@@ -246,13 +272,19 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         [
             rootPath,
             tree,
+            
             selectedFilePath,
             isDirty,
+            
             openWorkspace,
             loadChildren,
             toggleNode,
+
+            openFile,
+            
             selectFile,
             setIsDirty,
+            
             isSaving,
             saveActiveFile,
             registerSaveHandler,
