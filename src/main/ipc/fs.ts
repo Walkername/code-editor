@@ -4,6 +4,29 @@ import { assertInsideRoot, getAllowedRoot } from "../security/workspace";
 import { promises as fs } from "node:fs";
 
 export const registerFsHandlers = () => {
+    ipcMain.handle(
+        "fs:createFile",
+        async (_e, filePath: string) => {
+            if (!getAllowedRoot()) throw new Error("No directory selected");
+
+            assertInsideRoot(filePath);
+
+            try {
+                await fs.writeFile(filePath, "", {
+                    encoding: "utf-8",
+                    flag: "wx",
+                });
+                return filePath;
+            } catch (err) {
+                if ((err as NodeJS.ErrnoException).code === "EEXIST") {
+                    throw new Error(`File already exists: ${filePath}`);
+                }
+                console.error("createFile error:", err);
+                throw err;
+            }
+        },
+    );
+
     ipcMain.handle("fs:readDirectory", async (_e, dirPath: string) => {
         if (!getAllowedRoot()) throw new Error("No directory selected");
         try {
@@ -26,14 +49,17 @@ export const registerFsHandlers = () => {
             return [];
         }
     });
-    
+
     ipcMain.handle("fs:readFile", async (_e, filePath: string) => {
         assertInsideRoot(filePath);
         return fs.readFile(filePath, "utf-8");
     });
-    
-    ipcMain.handle("fs:writeFile", async (_e, filePath: string, data: string) => {
-        assertInsideRoot(filePath);
-        await fs.writeFile(filePath, data, "utf-8");
-    });
+
+    ipcMain.handle(
+        "fs:writeFile",
+        async (_e, filePath: string, data: string) => {
+            assertInsideRoot(filePath);
+            await fs.writeFile(filePath, data, "utf-8");
+        },
+    );
 };
