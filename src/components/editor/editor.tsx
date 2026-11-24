@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./editor.css";
 import { useWorkspace } from "../../context/workspace-context";
+import { Dot } from "lucide-react";
 
 export default function Editor() {
     const { selectedFilePath, isDirty, setIsDirty, registerSaveHandler } =
@@ -81,7 +82,7 @@ export default function Editor() {
 
     return (
         <div className="editor-window">
-            <div className="bar-label">Editor</div>
+            <div className="bar-label">Editor {isDirty && <Dot size={30} />}</div>
             <div className="editor">
                 <div className="editor-line-numbers-container" ref={lineNumbersRef}>
                     {lineNumbers.map((number) => (
