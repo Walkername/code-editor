@@ -122,7 +122,7 @@ export function FileTreeNode({ node, depth }: Props) {
                 <div>
                     {shouldShowInput && (
                         <div
-                            className="file-tree-node"
+                            className="file-tree-node file-tree-node-new-file-input"
                             style={
                                 {
                                     "--node-depth": `${depth + 1}`,
@@ -139,11 +139,6 @@ export function FileTreeNode({ node, depth }: Props) {
                                 onChange={(e) => setNewFileName(e.target.value)}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter") {
-                                        // TODO: создать файл newFileName в node.path
-                                        console.log(
-                                            "create",
-                                            node.path + "\\" + newFileName,
-                                        );
                                         window.electronAPI
                                             .createFile(
                                                 node.path + "\\" + newFileName,
